@@ -1,0 +1,42 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+    }
+    dependencies {
+        classpath "net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT"
+    }
+}
+
+apply plugin: "forge"
+
+minecraft {
+    version = "1.7.10-latest"
+    runDir = "run"
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "http://mvn.rx14.co.uk/repo/"
+    }
+}
+
+compileJava {
+    options.incremental = true
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
+}
+
+dependencies {
+    compile group: "org.yaml"               , name: "snakeyaml", version: "1.14"
+    compile group: "vic.mod.chat"           , name: "vChat"    , version: "0.2r17.16", classifier: "deobf"
+    compile group: "com.github.blamevic.irc", name: "YAIL"     , version: "0.1.4"
+}
