@@ -19,6 +19,7 @@ public class IRCChatBot implements IChatBot {
     IBotHandler handler;
 
     String channel;
+    String localchannel;
 
     BlockingQueue<String> ircQueue;
     BlockingQueue<String> minecraftChatQueue;
@@ -50,6 +51,8 @@ public class IRCChatBot implements IChatBot {
             debug = false;
 
         this.channel = (String) conf.get("channel");
+
+        this.localchannel = (String) conf.get("localchannel");
 
         String password = (String) conf.get("password");
 
@@ -92,7 +95,6 @@ public class IRCChatBot implements IChatBot {
                 IRCMessageParser.PrivateMessage privateMessage = IRCMessageParser.parsePrivateMessage(line);
                 if (privateMessage == null) continue;
                 minecraftChatQueue.add("<" + privateMessage.prefix.name + "> " + privateMessage.message);
-                System.out.println("<" + privateMessage.prefix.name + "> " + privateMessage.message);
             }
         }).start();
     }
@@ -115,7 +117,7 @@ public class IRCChatBot implements IChatBot {
     @Override
     public void onMessage(String message, IChatEntity sender, IChannelBase channel) {
         System.out.println(channel.getName());
-        if (!handler.getDefaultChannel().equals(channel)) return;
+        if (!handler.getChannelForName(this.localchannel).equals(channel)) return;
         if (sender.isBot()) return;
         if (sender.isServer()) return;
 
@@ -136,7 +138,7 @@ public class IRCChatBot implements IChatBot {
     public void onTick() {
         if (!minecraftChatQueue.isEmpty())
         {
-            handler.sendMessage(handler.getDefaultChannel(), minecraftChatQueue.remove());
+            handler.sendMessage(handler.getChannelForName(this.localchannel), minecraftChatQueue.remove());
         }
     }
 
