@@ -53,6 +53,7 @@ public class IRCChatBot implements IChatBot {
         this.channel = (String) conf.get("channel");
 
         this.localchannel = (String) conf.get("localchannel");
+        if (this.localchannel == null) this.localchannel = "global";
 
         String password = (String) conf.get("password");
 
