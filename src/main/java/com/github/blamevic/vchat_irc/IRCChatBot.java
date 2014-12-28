@@ -117,7 +117,6 @@ public class IRCChatBot implements IChatBot {
 
     @Override
     public void onMessage(String message, IChatEntity sender, IChannelBase channel) {
-        System.out.println(channel.getName());
         if (!handler.getChannelForName(this.localchannel).equals(channel)) return;
         if (sender.isBot()) return;
         if (sender.isServer()) return;
