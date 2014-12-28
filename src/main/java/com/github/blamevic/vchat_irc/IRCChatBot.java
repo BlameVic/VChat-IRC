@@ -51,6 +51,8 @@ public class IRCChatBot implements IChatBot {
 
         this.channel = (String) conf.get("channel");
 
+        String password = (String) conf.get("password");
+
         this.irc = new IRCClient(hostname, port, username, realname, debug);
 
         try {
@@ -59,7 +61,12 @@ public class IRCChatBot implements IChatBot {
             e.printStackTrace();
             throw new RuntimeException("VChat api sux");
         }
-        irc.login();
+
+        if (password == null)
+            irc.login();
+        else
+            irc.login(password);
+
         irc.waitForCommand("001");
         irc.joinChannel(channel);
 

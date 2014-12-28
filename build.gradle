@@ -37,5 +37,5 @@ compileJava {
 dependencies {
     compile group: "org.yaml"               , name: "snakeyaml", version: "1.14"
     compile group: "vic.mod.chat"           , name: "vChat"    , version: "0.3r18.23", classifier: "deobf"
-    compile group: "com.github.blamevic.irc", name: "YAIL"     , version: "0.1.4"
+    compile group: "com.github.blamevic.irc", name: "YAIL"     , version: "1.0.0.+"
 }
