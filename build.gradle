@@ -15,12 +15,31 @@ buildscript {
     }
 }
 
-apply plugin: "forge"
+apply plugin: "java"
 
-minecraft {
-    version = "1.7.10-latest"
-    runDir = "run"
+List<String> tasks = getGradle().getStartParameter().getTaskNames()
+
+if (
+    tasks.contains("runClient") ||
+    tasks.contains("runServer") ||
+    tasks.contains("idea") ||
+    tasks.contains("eclipse") ||
+    tasks.contains("setupCIWorkspace") ||
+    tasks.contains("setupDevWorkspace") ||
+    tasks.contains("setupDecompWorkspace") ||
+    tasks.contains("tasks") ||
+    tasks.contains("cleanCache")
+) {
+    apply plugin: "forge"
+
+    minecraft {
+        version = "1.7.10-latest"
+        runDir = "run"
+    }
 }
+
+group = "com.github.blamevic.vchat_irc"
+if (System.env.BUILD_NUMBER != null) version = "$version.$System.env.BUILD_NUMBER"
 
 repositories {
     mavenCentral()
@@ -38,4 +57,9 @@ dependencies {
     compile group: "org.yaml"               , name: "snakeyaml", version: "1.14"
     compile group: "vic.mod.chat"           , name: "vChat"    , version: "0.3r18.23", classifier: "deobf"
     compile group: "com.github.blamevic.irc", name: "YAIL"     , version: "1.0.0.+"
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
 }
