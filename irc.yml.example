@@ -1,0 +1,8 @@
+hostname: irc.esper.net
+port: 6667
+password: ircPa55w0rd
+username: ExampleBot
+realname: ExampleBot
+debug: yes # Default no, most users don't need this
+channel: #WAMM
+localchannel: myVChatChannel
